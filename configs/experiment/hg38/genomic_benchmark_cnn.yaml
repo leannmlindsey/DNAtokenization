@@ -32,7 +32,7 @@ encoder: id
 decoder: id
 
 dataset:
-  tokenizer_name: char
+  tokenizer_name: bpe
   rc_aug: false  # reverse complement augmentation
 
 scheduler:

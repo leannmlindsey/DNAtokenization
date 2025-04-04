@@ -11,6 +11,7 @@ from typing import Any, List, Union
 
 import torch
 from datasets import Dataset
+from transformers import AutoTokenizer
 from torch.utils.data.dataloader import DataLoader
 
 from caduceus.tokenization_caduceus import CaduceusTokenizer
@@ -109,6 +110,9 @@ class HG38(SequenceDataset):
                 model_max_length=self.max_length,
                 add_special_tokens=False
             )
+        elif self.tokenizer_name == "bpe":
+            logger.info("**Using BPE tokenizer**")
+            self.tokenizer = AutoTokenizer.from_pretrained("leannmlindsey/mamba_hg38_BPE_ntp_rc_aug_seqlen-4k_d_model-256_n_layer-4_lr-8e-6")
         else:
             raise NotImplementedError(f"Tokenizer {self.tokenizer_name} not implemented.")
 

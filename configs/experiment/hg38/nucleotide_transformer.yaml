@@ -17,7 +17,7 @@ trainer:
   gradient_clip_val: 1.0
 
 dataset:
-  tokenizer_name: char
+  tokenizer_name: bpe
   rc_aug: false  # reverse complement augmentation
 
 scheduler:

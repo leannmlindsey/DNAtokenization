@@ -33,7 +33,7 @@ model:
 
 dataset:
   # optional, default is max_length
-  tokenizer_name: char
+  tokenizer_name: bpe
   rc_aug: false  # reverse complement augmentation
 
 scheduler:

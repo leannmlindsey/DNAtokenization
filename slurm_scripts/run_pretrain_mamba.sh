@@ -2,8 +2,8 @@
 #SBATCH --get-user-env                      # Retrieve the users login environment
 #SBATCH -t 96:00:00                         # Time limit (hh:mm:ss)
 #SBATCH --mem=100G                           # RAM
-#SBATCH --gres=gpu:8                        # Number of GPUs
-#SBATCH --ntasks-per-node=8                 # Should correspond to num devices (at least 1-1 task to GPU)
+#SBATCH --gres=gpu:4                        # Number of GPUs
+#SBATCH --ntasks-per-node=4                 # Should correspond to num devices (at least 1-1 task to GPU)
 #SBATCH --cpus-per-task=4                   # Number of CPU cores per task
 #SBATCH -N 1                                # Number of nodes
 #SBATCH --requeue                           # Requeue job if it fails
@@ -11,13 +11,14 @@
 #SBATCH --output=../watch_folder/%x_%j.log  # Log file
 
 # Setup environment
-cd ../ || exit  # Go to the root directory of the repo
-source setup_env.sh
+#cd ../ || exit  # Go to the root directory of the repo
+cd /data/lindseylm/TOKENIZATION/MODELS/BPE/caduceus
+#source setup_env.sh
 
-NUM_DEVICES=8
+NUM_DEVICES=4
 
 # Run script
-SEQLEN=1024
+SEQLEN=4096
 MAX_STEPS=10000
 D_MODEL=256
 N_LAYER=8
@@ -26,11 +27,12 @@ RC_AUG="true"
 
 BATCH_SIZE=$(( 1048576 / SEQLEN ))
 SEQLEN_DIS="$(echo "scale=0; ${SEQLEN} / 1000" | bc)k"
-WANDB_NAME="mamba_ntp_rc_aug_seqlen-${SEQLEN_DIS}_d_model-${D_MODEL}_n_layer-${N_LAYER}_lr-${LR}"
+WANDB_NAME="NEW_mamba_ntp_rc_aug_seqlen-${SEQLEN_DIS}_d_model-${D_MODEL}_n_layer-${N_LAYER}_lr-${LR}"
 HYDRA_RUN_DIR="./outputs/pretrain/hg38/${WANDB_NAME}"
 
 mkdir -p "${HYDRA_RUN_DIR}"
-srun python -m train \
+#srun python -m train \
+python -m train \
   experiment=hg38/hg38 \
   callbacks.model_checkpoint_every_n_steps.every_n_train_steps=500 \
   dataset.max_length=${SEQLEN} \

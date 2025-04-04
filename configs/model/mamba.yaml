@@ -4,7 +4,7 @@ config:
   _target_: mamba_ssm.models.config_mamba.MambaConfig
   d_model: 128  # Will be overwritten by CL in the scaling exps
   n_layer: 2  # Will be overwritten by CL in the scaling exps
-  vocab_size: 12
+  vocab_size: 4096
   pad_vocab_size_multiple: 8
   rms_norm: true
   fused_add_norm: true

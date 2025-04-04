@@ -1,8 +1,8 @@
 _name_: hg38
 bed_file: null
 fasta_file: null
-dataset_name: hg38
-tokenizer_name: null
+dataset_name: null
+tokenizer_name: bpe
 cache_dir: null
 max_length: 1024
 add_eos: True
