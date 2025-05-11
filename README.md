@@ -67,6 +67,11 @@ pip install gdown
 ```
 gdown https://drive.google.com/file/d/1wJKWo-UaWK-yEuWJDsKonDupKDdqRsBw/view?usp=sharing
 ```
+Extract the dataset
+
+```
+unzip genomic_benchmark.zip
+```
 ### Nucleotide Transformer Tasks
 
 The Nucleotide Transformer downstream tasks can be accessed from:
