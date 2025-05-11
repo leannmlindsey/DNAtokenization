@@ -1,7 +1,6 @@
 <p align="center">
     <img src="assets/Caduceus_image.png" alt="Caduceus" width="200"/>
 </p>
-## Caduceus Fork
 
 **NOTE: This is a repository forked from the original Caduceus which is located at https://github.com/kuleshov-group/caduceus**
 
@@ -28,37 +27,36 @@ If you use this code or our results in your research, please cite:
 
 ```
 
-## Dataset Download Instructions
-### GUE Dataset (Genome Understanding Evaluation)
+### Dataset Download Instructions
+#### GUE Dataset (Genome Understanding Evaluation)
 The GUE dataset can be downloaded from:
 
-GUE Dataset on Google Drive
+[GUE Dataset on Google Drive](https://drive.google.com/file/d/1GRtbzTe3UXYF1oW27ASNhYX3SZ16D7N2/view)
 
 You can download it using gdown:
 ```
-bash
 # Install gdown if you don't have it
 pip install gdown
 ```
-### Download the dataset
+#### Download the dataset
 ```
 gdown https://drive.google.com/uc?id=1GRtbzTe3UXYF1oW27ASNhYX3SZ16D7N2
 ```
-### Extract the dataset
+#### Extract the dataset
 
 ```
-unzip [FILENAME].zip
+unzip GUE.zip
 ```
 
 ### Genomic Benchmark Dataset
 The Genomic Benchmark dataset can be downloaded from:
 
-Genomic Benchmark Dataset on Google Drive
+[Genomic Benchmark Dataset on Google Drive](https://drive.google.com/file/d/1wJKWo-UaWK-yEuWJDsKonDupKDdqRsBw/view?usp=sharing)
 
 This dataset is based on the original Genomic Benchmark:
 
-Original Genomic Benchmark Paper
-Original Genomic Benchmark Repository
+["Genomic benchmarks: a collection of datasets for genomic sequence classification", Gresova,et al. (2023)](https://bmcgenomdata.biomedcentral.com/articles/10.1186/s12863-023-01123-8)
+[Genomic Benchmark Repository](https://github.com/ML-Bioinfo-CEITEC/genomic_benchmarks)
 
 You can download it using the provided script:
 ```
@@ -68,38 +66,17 @@ pip install gdown
 ```
 ### Download the dataset
 ```
-python download_genomic_dataset.py --file_id 1wJKWo-UaWK-yEuWJDsKonDupKDdqRsBw
-```
-### For help with additional options
-```
-python download_genomic_dataset.py --help
-```
-Once downloaded, you can explore the dataset with the provided utility script:
-```
-bash
-# List all available tasks
-python load_genomic_dataset.py --list_tasks
-```
-
-### Get information about a specific task
-```
-python load_genomic_dataset.py --task_info demo_human_or_worm
-```
-
-### Explore data from a specific task
-```
-python load_genomic_dataset.py --task human_enhancers_cohn
+gdown https://drive.google.com/file/d/1wJKWo-UaWK-yEuWJDsKonDupKDdqRsBw/view?usp=sharing
 ```
 ### Nucleotide Transformer Tasks
 
 The Nucleotide Transformer downstream tasks can be accessed from:
 
-NTv2 Dataset on Google Drive
-Original Hugging Face Dataset
+[NTv2 Dataset on Google Drive](https://drive.google.com/file/d/1ost7Y8Ak_lWTMHOwAVUyX0CFj6kghe0O/view?usp=sharing)
+[NTv2 on Hugging Face](https://huggingface.co/datasets/InstaDeepAI/nucleotide_transformer_downstream_tasks_revised)
 
 You can download the preprocessed NTv2 dataset using gdown:
 ```
-bash
 # Install gdown if you don't have it
 pip install gdown
 ```
