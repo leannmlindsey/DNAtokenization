@@ -116,7 +116,24 @@ conda deactivate
 #### 2. Clone this repository
 ```
 git clone https://github.com/leannmlindsey/DNAtokenization.git
+cd DNAtokenization
 ```
+Note: This repository has 2 branches, the bpe branch which uses the bpe tokenizer and the main branch which uses the original char tokenizer. The log scripts will record which tokenizer is in use. To switch between branches, use the following commands:
+
+To switch to the main branch to use character tokenization
+```
+cd DNATokenization
+git checkout main 
+git status
+```
+
+To switch to the bpe branch to use bpe tokenization
+```
+cd DNATokenization
+git checkout bpe
+git status
+```
+
 #### 3. Pretraining
 Pretraining on Human Reference Genome
 (Data downloading instructions are copied from HyenaDNA repo)
@@ -143,8 +160,8 @@ Launch pretraining run using the command line
 python -m train \
   experiment=hg38/hg38 \
   callbacks.model_checkpoint_every_n_steps.every_n_train_steps=500 \
-  dataset.max_length=1024 \
-  dataset.batch_size=1024 \
+  dataset.max_length=4096 \
+  dataset.batch_size=128 \
   dataset.mlm=true \
   dataset.mlm_probability=0.15 \
   dataset.rc_aug=false \
@@ -156,7 +173,7 @@ python -m train \
   model.config.bidirectional_weight_tie=true \
   model.config.rcps=true \
   optimizer.lr="8e-3" \
-  train.global_batch_size=1024 \
+  train.global_batch_size=256 \
   trainer.max_steps=10000 \
   +trainer.val_check_interval=10000 \
   wandb=null
@@ -173,6 +190,76 @@ and run the training as a batch job:
 cd slurm_scripts
 sbatch run_pretrain_caduceus.sh
 ```
+
+#### 4. Fine tuning Instructions for GUE, GB and NTv2
+**Genomics Benchmark**
+The GenomicBenchmarks presented in Grešová et al. (2023) is comprised of 8 classification tasks.
+
+We can launch a downstream fine-tuning run on one of the tasks using the sample command below:
+```
+python -m train \
+    experiment=hg38/genomic_benchmark \
+    callbacks.model_checkpoint_every_n_steps.every_n_train_steps=5000 \
+    dataset.dataset_name="dummy_mouse_enhancers_ensembl" \
+    dataset.train_val_split_seed=1 \
+    dataset.batch_size=256 \
+    dataset.rc_aug=false \
+    +dataset.conjoin_train=false \
+    +dataset.conjoin_test=false \
+    loader.num_workers=2 \
+    model=caduceus \
+    model._name_=dna_embedding_caduceus \
+    +model.config_path="<path to model_config.json>" \
+    +model.conjoin_test=false \
+    +decoder.conjoin_train=true \
+    +decoder.conjoin_test=false \
+    optimizer.lr="1e-3" \
+    trainer.max_epochs=10 \
+    train.pretrained_model_path="<path to .ckpt file>" \
+    wandb=null
+```
+This sample run will fine-tune a pre-trained Caduceus-PS model on the dummy_mouse_enhancers_ensembl task. Note some of the additional arguments present here, relative to the pre-training command from above:
+
+* model.config_path contains the path model config that was saved during pre-training. This will be saved to the run directory of the pre-training experiment.
+* train.pretrained_model_path contains the path to the pre-trained model checkpoint.
+* dataset.conjoin_train determines whether the dataset will return a single sequence (dataset.conjoin_train=false) or the concatenation of a sequence and its reverse complement along dim=-1, during downstream fine-tuning training.
+* dataset.conjoin_test is the same as above, but for inference (e.g., validation / test).
+* decoder.conjoin_train determines whether the prediction head (a mean pooling and linear projection in the case of the Genomics Benchmark) is expecting an input tensor of shape (batch_size, seq_len, d_model) or (batch_size, seq_len, d_model, 2) during downstream fine-tuning training. When set to true the decoder is run on input[..., 0] and input[..., 1] and the results are averaged to produce the final prediction.
+* decoder.conjoin_test is the same as above, but for inference (e.g., validation / test).
+Note this benchmark only contains a training and test split for each task. Therefore, to have a more principled evaluation, we randomly split the training data into training and validation sets (90/10) using the dataset.train_val_split_seed argument. We perform early stopping on validation metric (accuracy) and repeat this for 5 random seeds.
+
+As with pre-training, we can also launch the fine-tuning run as a batch job using the provided run_genomic_benchmark.sh script. We also provide a helper shell script wrapper_run_genomics.sh that can be used to launch multiple fine-tuning runs in parallel.
+
+Finally, the run_genomics_benchmark_cnn.sh script can be used to train the CNN baseline for this experiment from scratch on the downstream tasks.
+**Genome Evaluation Understanding (GUE)**
+
+**Nucleotide Transformer (revised)**
+The Nucleotide Transformer suite of tasks was proposed in Dalla-Torre et al. (2023). The data is available on HuggingFace: InstaDeepAI/nucleotide_transformer_downstream_tasks.
+
+We can launch a downstream fine-tuning run on one of the tasks using the sample command below:
+```
+python -m train \
+    experiment=hg38/nucleotide_transformer \
+    callbacks.model_checkpoint_every_n_steps.every_n_train_steps=5000 \
+    dataset.dataset_name="${task}" \
+    dataset.train_val_split_seed=${seed} \
+    dataset.batch_size=${batch_size} \
+    dataset.rc_aug="${rc_aug}" \
+    +dataset.conjoin_test="${CONJOIN_TEST}" \
+    loader.num_workers=2 \
+    model._name_=dna_embedding_caduceus \
+    +model.config_path="<path to model_config.json>" \
+    +model.conjoin_test=false \
+    +decoder.conjoin_train=true \
+    +decoder.conjoin_test=false \
+    optimizer.lr="1e-3" \
+    trainer.max_epochs=10 \
+    train.pretrained_model_path="<path to .ckpt file>" \
+    trainer.max_epochs=20 \
+    wandb=null
+```
+We can also launch as batch jobs (see run_nucleotide_transformer.sh and wrapper_run_nucleotide_transformer.sh for details).
+
 ### Instructions to set up and run GPT-Neo, DNABERT, DNABERT-2, Nucleotide Transformer
 #### 1. Set up the environment (copied from the original DNABERT2 github repo)
 Create and activate virtual python environment
