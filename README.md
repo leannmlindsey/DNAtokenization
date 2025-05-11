@@ -285,7 +285,13 @@ conda deactivate
 ```
 git clone https://github.com/MAGICS-LAB/DNABERT_2.git
 ```
+Copy the training scripts from this repository to the DNABERT_2 directory.
+Note: These modifications were needed for the newest version of the DNABERT2 code to run on my system, however, they were not required at an earlier version. If you have a working version of the DNABERT2 repository, you may want to try running train.py in each script without the chnages that I made here.
 
+```
+cd DNATokenization
+cp attentionmodel_train/* /path/to/DNABERT_2/finetune
+```
 #### 3. Finetuning
 ```
 cd DNAtokenization
