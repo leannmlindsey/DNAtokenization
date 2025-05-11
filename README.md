@@ -1,7 +1,130 @@
 <p align="center">
     <img src="assets/Caduceus_image.png" alt="Caduceus" width="200"/>
 </p>
+# Caduceus Fork
 
+**NOTE: This is a repository forked from the original Caduceus which is located at https://github.com/kuleshov-group/caduceus**
+
+## Modifications to the Original Code
+I have made the following modifications to the original code:
+* Modified slurm scripts to work on University of Utah notchpeak system with 8 Nvidia A6000 GPUs
+* Added GUE benchmark
+* Corrected an error that appears in the MCC calculations in unbalanced test sets (see my reported issue here: kuleshov-group#38)
+
+## Abstract
+Motivation: Genomic language models have recently emerged as a new method to decode, interpret, and generate genetic sequences. Existing genomic language models have utilized various tokenization methods, including character tokenization, overlapping and non-overlapping k-mer tokenization, and byte-pair encoding, a method widely used in natural language models. Genomic sequences differ from natural language because of their low character variability, complex and overlapping features, and inconsistent directionality. These features make sub-word tokenization in genomic language models significantly different from both traditional language models and protein language models.
+
+Results: This study explores the impact of tokenization in genomic language models by evaluating their downstream performance on various fine-tuning tasks. We also perform a direct comparison of byte pair encoding and character tokenization in Mamba, a state-space model. Our results indicate that character tokenization outperforms sub-word tokenization methods on tasks that rely on nucleotide level resolution, such as splice site prediction and promoter detection, while no statistically significant differences were observed between tokenization methods on the remaining downstream tasks.
+
+## Citation Information
+If you use this code or our results in your research, please cite:
+
+```
+"A Comparison of Tokenization Impact in Attention Based and State Space Genomic Language Models," [Lindsey et al. (2025)]( https://doi.org/10.1101/2024.09.09.612081)
+
+"Caduceus: Bi-Directional Equivariant Long-Range DNA Sequence Modeling," [Schiff et al. (2024)](https://arxiv.org/abs/2403.03234).
+
+"DNABERT-2: Efficient Foundation Model and Benchmark For Multi-Species Genome," [Zhou et al (2023)](https://doi.org/10.1093/bioinformatics/btab083)
+
+```
+
+Dataset Download Instructions
+GUE Dataset (Genome Understanding Evaluation)
+The GUE dataset can be downloaded from:
+
+GUE Dataset on Google Drive
+
+You can download it using gdown:
+bash# Install gdown if you don't have it
+pip install gdown
+
+# Download the dataset
+gdown https://drive.google.com/uc?id=1GRtbzTe3UXYF1oW27ASNhYX3SZ16D7N2
+
+# Extract the dataset
+unzip [FILENAME].zip
+Genomic Benchmark Dataset
+The Genomic Benchmark dataset can be downloaded from:
+
+Genomic Benchmark Dataset on Google Drive
+
+This dataset is based on the original Genomic Benchmark:
+
+Original Genomic Benchmark Paper
+Original Genomic Benchmark Repository
+
+You can download it using the provided script:
+bash# Install required packages
+pip install gdown
+
+# Download the dataset
+python download_genomic_dataset.py --file_id 1wJKWo-UaWK-yEuWJDsKonDupKDdqRsBw
+
+# For help with additional options
+python download_genomic_dataset.py --help
+Once downloaded, you can explore the dataset with the provided utility script:
+bash# List all available tasks
+python load_genomic_dataset.py --list_tasks
+
+# Get information about a specific task
+python load_genomic_dataset.py --task_info demo_human_or_worm
+
+# Explore data from a specific task
+python load_genomic_dataset.py --task human_enhancers_cohn
+Nucleotide Transformer Tasks
+The Nucleotide Transformer downstream tasks can be accessed from:
+
+NTv2 Dataset on Google Drive
+Original Hugging Face Dataset
+
+You can download the preprocessed NTv2 dataset using gdown:
+bash# Install gdown if you don't have it
+pip install gdown
+
+# Download the dataset
+gdown https://drive.google.com/uc?id=1ost7Y8Ak_lWTMHOwAVUyX0CFj6kghe0O
+
+# Extract the dataset
+unzip NTv2.zip
+
+
+## Experiment Reproduction Instructions
+
+### CNN and State Space Models (HyenaDNA, Mamba-char, Mamba-bpe, Caduceus-ps)
+[To be filled in later]
+
+### Attention Based Models (GPT-Neo, DNABERT, DNABERT-2, Nucleotide Transformer)
+[To be filled in later]
+
+## License
+This project is licensed under the MIT License - see below for details:
+
+```
+MIT License
+
+Copyright (c) 2024 LeAnn M Lindsey and contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+## Acknowledgements
+We thank the original authors of Caduceus for making their code publicly available.
 
 # Caduceus &#9764;: Bi-Directional Equivariant Long-Range DNA Sequence Modeling
 [[Blog]](https://caduceus-dna.github.io/) &nbsp; | &nbsp; [[arXiv]](https://arxiv.org/abs/2403.03234) &nbsp; | &nbsp; [[HuggingFace 🤗]](https://huggingface.co/collections/kuleshov-group/caducues-65dcb89b4f54e416ef61c350)
