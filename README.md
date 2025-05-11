@@ -1,22 +1,22 @@
 <p align="center">
     <img src="assets/Caduceus_image.png" alt="Caduceus" width="200"/>
 </p>
-# Caduceus Fork
+## Caduceus Fork
 
 **NOTE: This is a repository forked from the original Caduceus which is located at https://github.com/kuleshov-group/caduceus**
 
-## Modifications to the Original Code
+### Modifications to the Original Code
 I have made the following modifications to the original code:
 * Modified slurm scripts to work on University of Utah notchpeak system with 8 Nvidia A6000 GPUs
 * Added GUE benchmark
 * Corrected an error that appears in the MCC calculations in unbalanced test sets (see my reported issue here: kuleshov-group#38)
 
-## Abstract
+### Abstract
 Motivation: Genomic language models have recently emerged as a new method to decode, interpret, and generate genetic sequences. Existing genomic language models have utilized various tokenization methods, including character tokenization, overlapping and non-overlapping k-mer tokenization, and byte-pair encoding, a method widely used in natural language models. Genomic sequences differ from natural language because of their low character variability, complex and overlapping features, and inconsistent directionality. These features make sub-word tokenization in genomic language models significantly different from both traditional language models and protein language models.
 
 Results: This study explores the impact of tokenization in genomic language models by evaluating their downstream performance on various fine-tuning tasks. We also perform a direct comparison of byte pair encoding and character tokenization in Mamba, a state-space model. Our results indicate that character tokenization outperforms sub-word tokenization methods on tasks that rely on nucleotide level resolution, such as splice site prediction and promoter detection, while no statistically significant differences were observed between tokenization methods on the remaining downstream tasks.
 
-## Citation Information
+### Citation Information
 If you use this code or our results in your research, please cite:
 
 ```
@@ -28,22 +28,29 @@ If you use this code or our results in your research, please cite:
 
 ```
 
-Dataset Download Instructions
-GUE Dataset (Genome Understanding Evaluation)
+## Dataset Download Instructions
+### GUE Dataset (Genome Understanding Evaluation)
 The GUE dataset can be downloaded from:
 
 GUE Dataset on Google Drive
 
 You can download it using gdown:
-bash# Install gdown if you don't have it
+```
+bash
+# Install gdown if you don't have it
 pip install gdown
-
-# Download the dataset
+```
+### Download the dataset
+```
 gdown https://drive.google.com/uc?id=1GRtbzTe3UXYF1oW27ASNhYX3SZ16D7N2
+```
+### Extract the dataset
 
-# Extract the dataset
+```
 unzip [FILENAME].zip
-Genomic Benchmark Dataset
+```
+
+### Genomic Benchmark Dataset
 The Genomic Benchmark dataset can be downloaded from:
 
 Genomic Benchmark Dataset on Google Drive
@@ -54,39 +61,56 @@ Original Genomic Benchmark Paper
 Original Genomic Benchmark Repository
 
 You can download it using the provided script:
-bash# Install required packages
+```
+bash
+# Install required packages
 pip install gdown
-
-# Download the dataset
+```
+### Download the dataset
+```
 python download_genomic_dataset.py --file_id 1wJKWo-UaWK-yEuWJDsKonDupKDdqRsBw
-
-# For help with additional options
+```
+### For help with additional options
+```
 python download_genomic_dataset.py --help
+```
 Once downloaded, you can explore the dataset with the provided utility script:
-bash# List all available tasks
+```
+bash
+# List all available tasks
 python load_genomic_dataset.py --list_tasks
+```
 
-# Get information about a specific task
+### Get information about a specific task
+```
 python load_genomic_dataset.py --task_info demo_human_or_worm
+```
 
-# Explore data from a specific task
+### Explore data from a specific task
+```
 python load_genomic_dataset.py --task human_enhancers_cohn
-Nucleotide Transformer Tasks
+```
+### Nucleotide Transformer Tasks
+
 The Nucleotide Transformer downstream tasks can be accessed from:
 
 NTv2 Dataset on Google Drive
 Original Hugging Face Dataset
 
 You can download the preprocessed NTv2 dataset using gdown:
-bash# Install gdown if you don't have it
+```
+bash
+# Install gdown if you don't have it
 pip install gdown
-
-# Download the dataset
+```
+### Download the dataset
+```
 gdown https://drive.google.com/uc?id=1ost7Y8Ak_lWTMHOwAVUyX0CFj6kghe0O
-
-# Extract the dataset
+```
+### Extract the dataset
+```
 unzip NTv2.zip
-
+```
 
 ## Experiment Reproduction Instructions
 
