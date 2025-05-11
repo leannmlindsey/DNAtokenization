@@ -16,7 +16,7 @@ data_path="/full/path/to/data"
 script_dir="/full/path/to/DNABERT_2/finetune"
 output_path="/full/path/to/RESULTS/DNABERT2/GB"
 # activate the conda environment you created for the attention models
-source activate dna_sandbox
+source activate dna
 ********************************************************************************************
 echo "starting DNABERT env on conda"
 mkdir $output_path

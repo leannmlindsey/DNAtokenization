@@ -302,12 +302,13 @@ output_path="/full/path/to/RESULTS/DNABERT/GB"
 source activate dna # or the name of your conda environment
 
 ```
-Run the script of your choice with the following command
+The GUE scripts are run using the original scripts from the DNABERT-2 authors. They will run the full benchmark. They can be modified by commenting out different sections of the script.
+The GB and NTv2 scripts are run in the following manner.
 ```
-sh run_dnabert2_gue.sh <seed> <dataset>
-sh run_dnabert2_gue.sh 18 covid
+sh run_dnabert2_gb.sh <seed> <dataset>
+sh run_dnabert2_gb.sh 18 covid
 ```
-This is an example of how to run the DNABERT-2 model on the GUE covid dataset with the initial seed 18
+This is an example of how to run the DNABERT-2 model on the GB covid dataset with the initial seed 18.
 
 
 ## License

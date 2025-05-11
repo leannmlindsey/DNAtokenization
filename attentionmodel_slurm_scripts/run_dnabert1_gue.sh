@@ -2,30 +2,29 @@
 #SBATCH -N 1
 #SBATCH -p GPU-shared
 #SBATCH -t 24:00:00
-#SBATCH --mail-user=leann.lindsey@utah.edu
-#SBATCH --mail-type=BEGIN
-#SBATCH --mail-type=END
 #SBATCH --job-name=gue_dnabert1
 #SBATCH --gpus=v100-32:1
-#SBATCH -o /ocean/projects/bio230026p/lindseyl/TOKENIZATION_FINAL_PAPER/outerror/%x%j.outerror
+#SBATCH -o /path/to/output/log/directory/%x%j.outerror
 
 # Load Modules 
 module load anaconda3/2024.10-1
 nvidia-smi
 
+*********************************************************************************************
+# modify these paths for your own system
+data_path="/full/path/to/data"
+script_dir="/full/path/to/DNABERT_2/finetune"
+output_path="/full/path/to/RESULTS/DNABERT/GB"
+# activate the conda environment you created for the attention models
+source activate dna
+********************************************************************************************
 echo "starting DNABERT env on conda"
-source activate dna_sandbox
-conda list
-script_dir="/ocean/projects/bio230026p/lindseyl/TOKENIZATION_FINAL_PAPER/MODELS/DNABERT_2/finetune"
-output_path="/ocean/projects/bio230026p/lindseyl/TOKENIZATION_FINAL_PAPER/RESULTS/DNABERT_1"
+mkdir $output_path
 
-#data_path=$1
-#lr=3e-5
 lr=3e-5
 seed=$1
 kmer=6
 vocab=bpe
-data_path="/ocean/projects/bio230026p/ahabib/FINETUNE_DATA"
 m=5
 echo "The provided data_path is $data_path"
 echo "The learning rate is $lr"
@@ -244,7 +243,7 @@ do
             --max_steps 1000 \
             --fp16 \
             --save_steps 200 \
-            --output_dir $output_path/gue_DNABERT1_${kmer}_${data}_seed${seed} \
+            --output_dir $output_path/gue_DNABERT1_${kmer}_mouse_${data}_seed${seed} \
             --evaluation_strategy steps \
             --eval_steps 200 \
             --warmup_steps 30 \
@@ -271,7 +270,7 @@ do
             --num_train_epochs 3 \
             --fp16 \
             --save_steps 200 \
-            --output_dir $output_path/gue_DNABERT1_${kmer}_${data}_seed${seed} \
+            --output_dir $output_path/gue_DNABERT1_${kmer}_tf_${data}_seed${seed} \
             --evaluation_strategy steps \
             --eval_steps 200 \
             --warmup_steps 30 \

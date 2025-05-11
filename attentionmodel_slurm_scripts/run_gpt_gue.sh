@@ -2,22 +2,23 @@
 #SBATCH -N 1
 #SBATCH -p GPU-shared
 #SBATCH -t 12:00:00
-#SBATCH --mail-user=leann.lindsey@utah.edu
-#SBATCH --mail-type=BEGIN
-#SBATCH --mail-type=END
 #SBATCH --job-name=gpt_gue
 #SBATCH --gpus=v100-32:1
-#SBATCH -o /ocean/projects/bio230026p/lindseyl/TOKENIZATION_FINAL_PAPER/outerror/%x%j.outerror
+#SBATCH -o /path/to/output/log/directory/%x%j.outerror
 
 # Load Modules 
 module load anaconda3/2024.10-1
 nvidia-smi
 
+*********************************************************************************************
+# modify these paths for your own system
+data_path="/full/path/to/data"
+script_dir="/full/path/to/DNABERT_2/finetune"
+output_path="/full/path/to/RESULTS/DNABERT/GB"
+# activate the conda environment you created for the attention models
+source activate dna
+********************************************************************************************
 echo "starting DNABERT env on conda"
-source activate dna_sandbox
-conda list
-script_dir="/ocean/projects/bio230026p/lindseyl/TOKENIZATION_FINAL_PAPER/MODELS/DNABERT_2/finetune"
-output_path="/ocean/projects/bio230026p/lindseyl/TOKENIZATION_FINAL_PAPER/RESULTS/GPT/GUE"
 mkdir $output_path
 
 lr=3e-5

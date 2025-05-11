@@ -2,28 +2,28 @@
 #SBATCH -N 1
 #SBATCH -p GPU-shared
 #SBATCH -t 12:00:00
-#SBATCH --mail-user=leann.lindsey@utah.edu
-#SBATCH --mail-type=BEGIN
-#SBATCH --mail-type=END
 #SBATCH --job-name=ntv2_ntv2
 #SBATCH --gpus=v100-32:1
-#SBATCH -o /ocean/projects/bio230026p/lindseyl/TOKENIZATION_FINAL_PAPER/outerror/%x%j.outerror
+#SBATCH -o /path/to/output/log/directory/%x%j.outerror
 
 # Load Modules 
 module load anaconda3/2024.10-1
 nvidia-smi
 
+*********************************************************************************************
+# modify these paths for your own system
+data_path="/full/path/to/data"
+script_dir="/full/path/to/DNABERT_2/finetune"
+output_path="/full/path/to/RESULTS/DNABERT/GB"
+# activate the conda environment you created for the attention models
+source activate dna
+********************************************************************************************
 echo "starting DNABERT env on conda"
-source activate dna_sandbox
-conda list
-script_dir="/ocean/projects/bio230026p/lindseyl/TOKENIZATION_FINAL_PAPER/MODELS/DNABERT_2/finetune"
-output_path="/ocean/projects/bio230026p/lindseyl/TOKENIZATION_FINAL_PAPER/RESULTS/NTv2"
+mkdir $output_path
 
-#data_path=$1
-#lr=3e-5
-lr=$1
-seed=$2
-data_path="/ocean/projects/bio230026p/lindseyl/TOKENIZATION_FINAL_PAPER/DATA"
+lr=3e-5
+seed=$1
+dataset=$2
 m=5
 echo "The provided data_path is $data_path"
 echo "The learning rate is $lr"
@@ -90,8 +90,9 @@ echo "Use: $model"
 
 for seed in $seed
 do
+    # Uncomment below if you prefer to run the full GB benchmark
     #for data in H2AFZ H3K27ac H3K27me3 H3K36me3 H3K4me1 H3K4me2 H3K4me3 H3K9ac H3K9me3 H4K20me1 enhancers enhancers_types promoter_all promoter_no_tata promoter_tata splice_sites_acceptors splice_sites_all splice_sites_donors
-    for data in splice_sites_all    
+    for data in dataset    
 do
 
 	# Get the appropriate max_length for this dataset
@@ -101,7 +102,7 @@ do
 
         python train_orig.py \
             --model_name_or_path ${model} \
-            --data_path  ${data_path}/NTv2/$data \
+            --data_path  ${data_path}/$data \
             --kmer -1 \
             --run_name ${run_name}_${lr}_${data}_seed${seed} \
             --model_max_length $max_length \
@@ -115,7 +116,7 @@ do
             --num_train_epochs 3 \
             --fp16 \
             --save_steps 200 \
-            --output_dir $output_path/nt_${run_name}_${lr}_${data}_seed${seed} \
+            --output_dir $output_path/ntv2_${run_name}_${lr}_${data}_seed${seed} \
             --evaluation_strategy steps \
             --eval_steps 200 \
             --warmup_steps 50 \
