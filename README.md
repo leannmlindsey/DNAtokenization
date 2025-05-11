@@ -93,10 +93,43 @@ unzip NTv2.zip
 ## Experiment Reproduction Instructions
 
 ### CNN and State Space Models (HyenaDNA, Mamba-char, Mamba-bpe, Caduceus-ps)
-[To be filled in later]
+#### Set up the environment (copied from the original Caduceus github repo)
+To get started, create a conda environment containing the required dependencies.
+```
+conda env create -f caduceus_env.yml
+```
+Activate the environment.
+```
+conda activate caduceus_env
+```
+Create the following directories to store saved models and slurm logs:
+```
+mkdir outputs
+mkdir watch_folder
+```
+Deactivate the environment
+```
+conda deactivate
+```
 
 ### Attention Based Models (GPT-Neo, DNABERT, DNABERT-2, Nucleotide Transformer)
-[To be filled in later]
+#### Set up the environment (copied from the original DNABERT2 github repo)
+```
+# Create and activate virtual python environment
+conda create -n dna python=3.8
+conda activate dna
+
+# (Optional if you would like to use flash attention)
+# Install triton from source
+git clone https://github.com/openai/triton.git
+cd triton/python
+pip install cmake  # build-time dependency
+pip install -e .
+
+# Install required packages
+python3 -m pip install -r requirements.txt
+conda deactivate
+```
 
 ## License
 This project is licensed under the MIT License - see below for details:
