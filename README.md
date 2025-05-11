@@ -95,7 +95,7 @@ unzip NTv2.zip
 ## Experiment Reproduction Instructions
 
 ### Instructions to set up and run CNN, HyenaDNA, Mamba-char, Mamba-bpe, and Caduceus-ps
-#### Set up the environment (copied from the original Caduceus github repo)
+#### 1. Set up the environment (copied from the original Caduceus github repo)
 To get started, create a conda environment containing the required dependencies.
 ```
 conda env create -f caduceus_env.yml
@@ -285,6 +285,30 @@ conda deactivate
 ```
 git clone https://github.com/MAGICS-LAB/DNABERT_2.git
 ```
+
+#### 3. Finetuning
+```
+cd DNAtokenization
+cd attentionmodel_slurm_scripts
+```
+All scripts will need modified with the following paths
+```
+# modify these paths for your own system
+data_path="/full/path/to/data"
+script_dir="/full/path/to/DNABERT_2/finetune"
+output_path="/full/path/to/RESULTS/DNABERT/GB"
+
+# activate the conda environment you created for the attention models
+source activate dna # or the name of your conda environment
+
+```
+Run the script of your choice with the following command
+```
+sh run_dnabert2_gue.sh <seed> <dataset>
+sh run_dnabert2_gue.sh 18 covid
+```
+This is an example of how to run the DNABERT-2 model on the GUE covid dataset with the initial seed 18
+
 
 ## License
 This project is licensed under the MIT License - see below for details:
