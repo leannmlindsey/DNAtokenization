@@ -1,13 +1,10 @@
-<p align="center">
-    <img src="assets/Caduceus_image.png" alt="Caduceus" width="200"/>
-</p>
-
 **NOTE: This is a repository forked from the original Caduceus which is located at https://github.com/kuleshov-group/caduceus**
 
 ### Modifications to the Original Code
 I have made the following modifications to the original code:
 * Modified slurm scripts to work on University of Utah notchpeak system with 8 Nvidia A6000 GPUs
-* Added GUE benchmark
+* Added code to run the GUE benchmark
+* Added code to run the NTv2 benchmark
 * Corrected an error that appears in the MCC calculations in unbalanced test sets (see my reported issue here: kuleshov-group#38)
 
 ### Abstract
