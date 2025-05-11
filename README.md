@@ -27,22 +27,22 @@ If you use this code or our results in your research, please cite:
 
 ```
 
-### Dataset Download Instructions
-#### GUE Dataset (Genome Understanding Evaluation)
+## Dataset Download Instructions
+### GUE Dataset (Genome Understanding Evaluation)
 The GUE dataset can be downloaded from:
 
 [GUE Dataset on Google Drive](https://drive.google.com/file/d/1GRtbzTe3UXYF1oW27ASNhYX3SZ16D7N2/view)
 
 You can download it using gdown:
 ```
-# Install gdown if you don't have it
+# Install required packages
 pip install gdown
 ```
-#### Download the dataset
+Download the dataset
 ```
 gdown https://drive.google.com/uc?id=1GRtbzTe3UXYF1oW27ASNhYX3SZ16D7N2
 ```
-#### Extract the dataset
+Extract the dataset
 
 ```
 unzip GUE.zip
@@ -60,7 +60,6 @@ This dataset is based on the original Genomic Benchmark:
 
 You can download it using the provided script:
 ```
-bash
 # Install required packages
 pip install gdown
 ```
@@ -80,11 +79,11 @@ You can download the preprocessed NTv2 dataset using gdown:
 # Install gdown if you don't have it
 pip install gdown
 ```
-### Download the dataset
+Download the dataset
 ```
 gdown https://drive.google.com/uc?id=1ost7Y8Ak_lWTMHOwAVUyX0CFj6kghe0O
 ```
-### Extract the dataset
+Extract the dataset
 ```
 unzip NTv2.zip
 ```
