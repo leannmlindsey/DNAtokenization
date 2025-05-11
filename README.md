@@ -113,22 +113,29 @@ conda deactivate
 ```
 
 ### Attention Based Models (GPT-Neo, DNABERT, DNABERT-2, Nucleotide Transformer)
-#### Set up the environment (copied from the original DNABERT2 github repo)
+#### 1. Set up the environment (copied from the original DNABERT2 github repo)
+Create and activate virtual python environment
 ```
-# Create and activate virtual python environment
 conda create -n dna python=3.8
 conda activate dna
+```
+(Optional if you would like to use flash attention)
+Install triton from source
 
-# (Optional if you would like to use flash attention)
-# Install triton from source
+```
 git clone https://github.com/openai/triton.git
 cd triton/python
 pip install cmake  # build-time dependency
 pip install -e .
-
-# Install required packages
+```
+Install required packages
+```
 python3 -m pip install -r requirements.txt
 conda deactivate
+```
+#### 2. Clone the DNABERT-2 repository
+```
+git clone https://github.com/MAGICS-LAB/DNABERT_2.git
 ```
 
 ## License
