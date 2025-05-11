@@ -25,6 +25,8 @@ If you use this code or our results in your research, please cite:
 ```
 
 ## Dataset Download Instructions
+You will need to keep track of the file paths for all three datasets, the original Caduceus repository and this repository. These filepaths will need to be entered into the slurm scripts. 
+
 ### GUE Dataset (Genome Understanding Evaluation)
 The GUE dataset can be downloaded from:
 
@@ -60,7 +62,7 @@ You can download it using the provided script:
 # Install required packages
 pip install gdown
 ```
-### Download the dataset
+Download the dataset
 ```
 gdown https://drive.google.com/file/d/1wJKWo-UaWK-yEuWJDsKonDupKDdqRsBw/view?usp=sharing
 ```
@@ -92,7 +94,7 @@ unzip NTv2.zip
 
 ## Experiment Reproduction Instructions
 
-### CNN and State Space Models (HyenaDNA, Mamba-char, Mamba-bpe, Caduceus-ps)
+### Instructions to set up and run CNN, HyenaDNA, Mamba-char, Mamba-bpe, and Caduceus-ps
 #### Set up the environment (copied from the original Caduceus github repo)
 To get started, create a conda environment containing the required dependencies.
 ```
@@ -111,8 +113,67 @@ Deactivate the environment
 ```
 conda deactivate
 ```
+#### 2. Clone this repository
+```
+git clone https://github.com/leannmlindsey/DNAtokenization.git
+```
+#### 3. Pretraining
+Pretraining on Human Reference Genome
+(Data downloading instructions are copied from HyenaDNA repo)
 
-### Attention Based Models (GPT-Neo, DNABERT, DNABERT-2, Nucleotide Transformer)
+First, download the Human Reference Genome data. It's comprised of 2 files, 1 with all the sequences (the .fasta file), and with the intervals we use (.bed file).
+
+The file structure should look like
+```
+data
+|-- hg38/
+    |-- hg38.ml.fa
+    |-- human-sequences.bed
+```
+Download fasta (.fa format) file (of the entire human genome) into ./data/hg38. ~24 chromosomes in the whole genome (merged into 1 file), each chromosome is a continuous sequence, basically. Then download the .bed file with sequence intervals (contains chromosome name, start, end, split, which then allow you to retrieve from the fasta file).
+
+```
+mkdir -p data/hg38/
+curl https://storage.googleapis.com/basenji_barnyard2/hg38.ml.fa.gz > data/hg38/hg38.ml.fa.gz
+gunzip data/hg38/hg38.ml.fa.gz  # unzip the fasta file
+curl https://storage.googleapis.com/basenji_barnyard2/sequences_human.bed > data/hg38/human-sequences.bed
+```
+Launch pretraining run using the command line
+```
+python -m train \
+  experiment=hg38/hg38 \
+  callbacks.model_checkpoint_every_n_steps.every_n_train_steps=500 \
+  dataset.max_length=1024 \
+  dataset.batch_size=1024 \
+  dataset.mlm=true \
+  dataset.mlm_probability=0.15 \
+  dataset.rc_aug=false \
+  model=caduceus \
+  model.config.d_model=128 \
+  model.config.n_layer=4 \
+  model.config.bidirectional=true \
+  model.config.bidirectional_strategy=add \
+  model.config.bidirectional_weight_tie=true \
+  model.config.rcps=true \
+  optimizer.lr="8e-3" \
+  train.global_batch_size=1024 \
+  trainer.max_steps=10000 \
+  +trainer.val_check_interval=10000 \
+  wandb=null
+```
+or alternatively, if using a cluster that has slurm installed, adapt the scripts below:
+```
+slurm_scripts
+|-- run_pretrain_caduceus.sh
+|-- run_pretrain_hyena.sh
+|-- run_pretrain_mamba.sh
+```
+and run the training as a batch job:
+```
+cd slurm_scripts
+sbatch run_pretrain_caduceus.sh
+```
+### Instructions to set up and run GPT-Neo, DNABERT, DNABERT-2, Nucleotide Transformer
 #### 1. Set up the environment (copied from the original DNABERT2 github repo)
 Create and activate virtual python environment
 ```
