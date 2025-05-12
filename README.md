@@ -314,7 +314,10 @@ The GB and NTv2 scripts are run in the following manner.
 sh run_dnabert2_gb.sh <seed> <dataset>
 sh run_dnabert2_gb.sh 18 covid
 ```
-This is an example of how to run the DNABERT-2 model on the GB covid dataset with the initial seed 18.
+This will run the DNABERT-2 model on the GB covid dataset with the initial seed 18.
+
+**Note: If you plan to run experiments with both the char and bpe branches, I advise cloning the branches in two different directories**
+
 
 
 ## License
