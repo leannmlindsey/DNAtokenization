@@ -1,0 +1,161 @@
+_name_: nucleotide_transformer_v2  # this links to the overall SequenceDataset of all nucleotide transformer datasets
+train_val_split_seed: ${train.seed}  # Used for train/validation splitting
+dataset_name: enhancers  # this specifies which dataset in nuc trx
+dest_path: null  # path to overall nuc trx datasets
+max_length: ${.${.dataset_name}.max_length}
+d_output: ${.${.dataset_name}.classes} 
+use_padding: True
+padding_side: left
+add_eos: False
+batch_size: 256
+train_len: ${.${.dataset_name}.train_len}
+__l_max: ${.max_length}
+shuffle: true  # set this as default!
+metric: ${.${.dataset_name}.metric}
+torchmetrics: ${.${.dataset_name}.torchmetrics}
+# these are used to find the right attributes automatically for each dataset
+promoter_all:
+  train_len: 30000
+  classes: 2
+  max_length: 300
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_binary, accumulated_precision_binary, accumulated_recall_binary, accumulated_specificity]
+promoter_tata:
+  train_len: 5062
+  classes: 2
+  max_length: 300
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_binary, accumulated_precision_binary, accumulated_recall_binary, accumulated_specificity]
+promoter_no_tata:
+  train_len: 30000
+  classes: 2
+  max_length: 300
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_binary, accumulated_precision_binary, accumulated_recall_binary, accumulated_specificity]
+enhancers:
+  train_len: 30000
+  classes: 2
+  max_length: 400
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_binary, accumulated_precision_binary, accumulated_recall_binary, accumulated_specificity]
+enhancers_types:
+  train_len: 30000
+  classes: 3
+  max_length: 400
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_macro, accumulated_precision_macro, accumulated_recall_macro]
+splice_sites_all:
+  train_len: 30000
+  classes: 3
+  max_length: 600
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_macro, accumulated_precision_macro, accumulated_recall_macro]
+splice_sites_acceptors:
+  train_len: 30000
+  classes: 2
+  max_length: 600
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_binary, accumulated_precision_binary, accumulated_recall_binary, accumulated_specificity]
+splice_sites_donors:
+  train_len: 30000
+  classes: 2
+  max_length: 600
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_binary, accumulated_precision_binary, accumulated_recall_binary, accumulated_specificity]
+H2AFZ:
+  train_len: 30000
+  classes: 2
+  max_length: 1000
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_binary, accumulated_precision_binary, accumulated_recall_binary, accumulated_specificity]
+H3K27ac:
+  train_len: 30000
+  classes: 2
+  max_length: 1000
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_binary, accumulated_precision_binary, accumulated_recall_binary, accumulated_specificity]
+H3K27AC:
+  train_len: 30000
+  classes: 2
+  max_length: 1000
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_binary, accumulated_precision_binary, accumulated_recall_binary, accumulated_specificity]
+H3K27me3:
+  train_len: 30000
+  classes: 2
+  max_length: 1000
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_binary, accumulated_precision_binary, accumulated_recall_binary, accumulated_specificity]
+H3K36me3:
+  train_len: 30000
+  classes: 2
+  max_length: 1000
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_binary, accumulated_precision_binary, accumulated_recall_binary, accumulated_specificity]
+H3K4me1:
+  train_len: 30000
+  classes: 2
+  max_length: 1000
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_binary, accumulated_precision_binary, accumulated_recall_binary, accumulated_specificity]
+H3K4me2:
+  train_len: 30000
+  classes: 2
+  max_length: 1000
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_binary, accumulated_precision_binary, accumulated_recall_binary, accumulated_specificity]
+H3K4me3:
+  train_len: 30000
+  classes: 2
+  max_length: 1000
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_binary, accumulated_precision_binary, accumulated_recall_binary, accumulated_specificity]
+H3K9ac:
+  train_len: 23274
+  classes: 2
+  max_length: 1000
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_binary, accumulated_precision_binary, accumulated_recall_binary, accumulated_specificity]
+H3K9me3:
+  train_len: 27438
+  classes: 2
+  max_length: 1000
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_binary, accumulated_precision_binary, accumulated_recall_binary, accumulated_specificity]
+H4K20me1:
+  train_len: 30000
+  classes: 2
+  max_length: 1000
+  metric: mcc
+  torchmetrics: [accumulated_mcc, accumulated_accuracy, accumulated_f1_binary, accumulated_precision_binary, accumulated_recall_binary, accumulated_specificity]
+
+# name maxlen classes samples metric
+#| Task                  | Number of train sequences | Number of test sequences | Number of labels | Sequence length |
+#| --------------------- | ------------------------- | ------------------------ | ---------------- | --------------- |
+#| promoter_all          | 30,000                    | 1,584                    | 2                | 300             |
+#| promoter_tata         | 5,062                     | 212                      | 2                | 300             |
+#| promoter_no_tata      | 30,000                    | 1,372                    | 2                | 300             |
+#| enhancers             | 30,000                    | 3,000                    | 2                | 400             |
+#| enhancers_types       | 30,000                    | 3,000                    | 3                | 400             |
+#| splice_sites_all      | 30,000                    | 3,000                    | 3                | 600             |
+#| splice_sites_acceptor | 30,000                    | 3,000                    | 2                | 600             |
+#| splice_sites_donor    | 30,000                    | 3,000                    | 2                | 600             |
+#| H2AFZ                 | 30,000                    | 3,000                    | 2                | 1,000           |
+#| H3K27ac               | 30,000                    | 1,616                    | 2                | 1,000           |
+#| H3K27me3              | 30,000                    | 3,000                    | 2                | 1,000           |
+#| H3K36me3              | 30,000                    | 3,000                    | 2                | 1,000           |
+#| H3K4me1               | 30,000                    | 3,000                    | 2                | 1,000           |
+#| H3K4me2               | 30,000                    | 2,138                    | 2                | 1,000           |
+#| H3K4me3               | 30,000                    | 776                      | 2                | 1,000           |
+#| H3K9ac                | 23,274                    | 1,004                    | 2                | 1,000           |
+#| H3K9me3               | 27,438                    | 850                      | 2                | 1,000           |
+#| H4K20me1              | 30,000                    | 2,270                    | 2                | 1,000           |
+
+#Repository:
+#Nucleotide Transformer
+#Paper:
+#The Nucleotide Transformer: Building and Evaluating Robust Foundation Models for Human Genomics
+#Models trained or fine-tuned on
+#InstaDeepAI/nucleotide_transformer_downstream_tasks_revised
+
+
