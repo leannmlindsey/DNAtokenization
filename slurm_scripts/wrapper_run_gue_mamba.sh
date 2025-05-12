@@ -26,21 +26,10 @@
 #LRS=( "6e-4" "6e-5")
 
 ## Mamba NTP
-LOG_DIR="../watch_folder/gue_cv10/mamba_08182024"
-# model comparison 1
-#CONFIG_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus/outputs/pretrain/hg38/mamba_ntp_rc_aug_seqlen-4k_d_model-128_n_layer-4_lr-8e-5/model_config.json"
-#PRETRAINED_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus/outputs/pretrain/hg38/mamba_ntp_rc_aug_seqlen-4k_d_model-128_n_layer-4_lr-8e-5/checkpoints/last.ckpt"
-#DISPLAY_NAME="mamba_bpe_4k_d128_4L"
-
-# model comparison 2
-#CONFIG_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus/outputs/pretrain/hg38/mamba_ntp_rc_aug_seqlen-4k_d_model-256_n_layer-4_lr-8e-5/model_config.json"
-#PRETRAINED_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus/outputs/pretrain/hg38/mamba_ntp_rc_aug_seqlen-4k_d_model-256_n_layer-4_lr-8e-5/checkpoints/last.ckpt"
-#DISPLAY_NAME="mamba_bpe_4k_d256_4L"
-
-# model comparison 3
-#CONFIG_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus/outputs/pretrain/hg38/mamba_ntp_rc_aug_seqlen-4k_d_model-256_n_layer-8_lr-8e-5/model_config.json"
-#PRETRAINED_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus/outputs/pretrain/hg38/mamba_ntp_rc_aug_seqlen-4k_d_model-256_n_layer-8_lr-8e-5/checkpoints/last.ckpt"
-#DISPLAY_NAME="mamba_bpe_4k_d256_8L"
+LOG_DIR="../watch_folder/gue_cv10/mamba"
+CONFIG_PATH="/path/to/model/model_config.json"
+PRETRAINED_PATH="/path/to/model/checkpoints/last.ckpt"
+DISPLAY_NAME="mamba_bpe_4k_d256_4L"
 MODEL="mamba"
 MODEL_NAME="dna_embedding_mamba"
 CONJOIN_TRAIN_DECODER="false"

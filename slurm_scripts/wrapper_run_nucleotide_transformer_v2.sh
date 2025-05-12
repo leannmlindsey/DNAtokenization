@@ -39,30 +39,10 @@
 #LRS=( "1e-3" "2e-3" )
 
 
-LOG_DIR="../watch_folder/ntv2_cv10/mamba_03242025"
-# model comparison 1
-#CONFIG_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus/outputs/pretrain/hg38/mamba_ntp_rc_aug_seqlen-4k_d_model-128_n_layer-4_lr-8e-5/model_config.json"
-#PRETRAINED_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus/outputs/pretrain/hg38/mamba_ntp_rc_aug_seqlen-4k_d_model-128_n_layer-4_lr-8e-5/checkpoints/last.ckpt"
-#DISPLAY_NAME="mamba_bpe_4k_d128_4L"
-# model comparison 2
-
-#CONFIG_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus/outputs/pretrain/hg38/mamba_ntp_rc_aug_seqlen-4k_d_model-256_n_layer-4_lr-8e-5/model_config.json"
-#PRETRAINED_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus/outputs/pretrain/hg38/mamba_ntp_rc_aug_seqlen-4k_d_model-256_n_layer-4_lr-8e-5/checkpoints/last.ckpt"
-#DISPLAY_NAME="mamba_bpe_4k_d256_4L_replicate"
-
-# NEWLY TRAINED ON OLD CODEBASE # 4 L
-CONFIG_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus/outputs/pretrain/hg38/mamba_hg38_bpe_ntp_rc_aug_4kk_d256_n4_lr-5e-5_bs-128/model_config.json"
-PRETRAINED_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus/outputs/pretrain/hg38/mamba_hg38_bpe_ntp_rc_aug_4kk_d256_n4_lr-5e-5_bs-128/checkpoints/last.ckpt"
-DISPLAY_NAME="mamba_bpe_4k_d256_4L_new1"
-
-# NEWLY TRAINED ON OLD CODEBASE # 8 L
-CONFIG_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus/outputs/pretrain/hg38/NEW_mamba_ntp_rc_aug_seqlen-4k_d_model-256_n_layer-8_lr-8e-3/model_config.json"
-PRETRAINED_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus/outputs/pretrain/hg38/NEW_mamba_ntp_rc_aug_seqlen-4k_d_model-256_n_layer-8_lr-8e-3/checkpoints/last.ckpt"
-DISPLAY_NAME="mamba_bpe_4k_d256_8L_new1"
-# model comparison 3
-#CONFIG_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus/outputs/pretrain/hg38/mamba_ntp_rc_aug_seqlen-4k_d_model-256_n_layer-8_lr-8e-5/model_config.json"
-#PRETRAINED_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus/outputs/pretrain/hg38/mamba_ntp_rc_aug_seqlen-4k_d_model-256_n_layer-8_lr-8e-5/checkpoints/last.ckpt"
-#DISPLAY_NAME="mamba_bpe_4k_d256_8L"
+LOG_DIR="../watch_folder/ntv2_cv10/mamba"
+CONFIG_PATH="/path/to/model/model_config.json"
+PRETRAINED_PATH="/path/to/model/checkpoints/last.ckpt"
+DISPLAY_NAME="mamba_bpe_4k_d128_4L"
 MODEL="mamba"
 MODEL_NAME="dna_embedding_mamba"
 CONJOIN_TRAIN_DECODER="false"

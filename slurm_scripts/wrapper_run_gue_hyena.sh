@@ -9,15 +9,9 @@ LOG_DIR="../watch_folder/gue_cv10/hyena"
 #PRETRAINED_PATH=$(realpath "../outputs/hyena_hf/hyenadna-tiny-1k-seqlen/weights.ckpt")
 #DISPLAY_NAME="hyena"
 # 4 layer
-CONFIG_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/CLEAN/caduceus/outputs/pretrain/hg38/hyena_rc_aug_seqlen-4k_dmodel-256_nlayer-4_lr-6e-4/model_config.json"
-PRETRAINED_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/CLEAN/caduceus/outputs/pretrain/hg38/hyena_rc_aug_seqlen-4k_dmodel-256_nlayer-4_lr-6e-4/checkpoints/last.ckpt"
-DISPLAY_NAME="hyena_char_4k_d256_4L"
-
-# 8 layer
-#CONFIG_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/CLEAN/caduceus/outputs/pretrain/hg38/hyena_rc_aug_seqlen-4k_dmodel-256_nlayer-8_lr-6e-4/model_config.json"
-#PRETRAINED_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/CLEAN/caduceus/outputs/pretrain/hg38/hyena_rc_aug_seqlen-4k_dmodel-256_nlayer-8_lr-6e-4/checkpoints/last.ckpt"
-#DISPLAY_NAME="hyena_char_4k_d256_8L"
-
+CONFIG_PATH="/path/to/pretrained/model_config.json"
+PRETRAINED_PATH="/path/to/pretrained/checkpoints/last.ckpt"
+DISPLAY_NAME="hyena_char_4k_d256_4L" #example of a display name 
 MODEL="hyena"
 MODEL_NAME="dna_embedding"
 CONJOIN_TRAIN_DECODER="false"

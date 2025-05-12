@@ -12,8 +12,10 @@
 #SBATCH --open-mode=append                  # Do not overwrite logs
 
 # Setup environment
-cd ../ || exit  # Go to the root directory of the repo
-source setup_env.sh
+module load cuda
+nvidia-smi
+source activate CADUCEUS_3
+cd /path/to/DNAtokenization/
 export HYDRA_FULL_ERROR=1
 
 NUM_DEVICES=8
@@ -22,7 +24,7 @@ NUM_DEVICES=8
 SEQLEN=131072
 MAX_STEPS=50000
 D_MODEL=256
-N_LAYER=8
+N_LAYER=4
 LR="8e-3"
 BIDIRECTIONAL_STRATEGY="add"
 BIDIRECTIONAL_WEIGHT_TIE="true"

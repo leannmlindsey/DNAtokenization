@@ -10,8 +10,10 @@
 #SBATCH --open-mode=append               # Do not overwrite logs
 
 # Setup environment
-cd ../ || exit  # Go to the root directory of the repo
-source setup_env.sh
+module load cuda
+nvidia-smi
+source activate CADUCEUS_3
+cd /path/to/DNAtokenization/
 export HYDRA_FULL_ERROR=1
 
 # Expected args:

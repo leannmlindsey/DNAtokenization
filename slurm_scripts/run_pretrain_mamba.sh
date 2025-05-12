@@ -13,11 +13,11 @@
 #SBATCH --open-mode=append                  # Do not overwrite logs
         
 # Setup environment
-#module load CUDA/11.8 
+module load cuda
 nvidia-smi
-source activate caduceus_env2
+source activate CADUCEUS_3
+cd /path/to/DNAtokenization/
 
-cd /data/lindseylm/TOKENIZATION/MODELS/BPE/caduceus
 export HYDRA_FULL_ERROR
 NUM_DEVICES=4
 

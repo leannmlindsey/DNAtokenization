@@ -15,7 +15,7 @@
 module load cuda
 nvidia-smi
 source activate CADUCEUS_3
-cd /uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus
+cd /path/to/DNAtokenization/
 
 export HYDRA_FULL_ERROR=1
 

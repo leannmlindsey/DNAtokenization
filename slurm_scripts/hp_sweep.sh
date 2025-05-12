@@ -12,7 +12,7 @@ BATCH_SIZES=(32 64 128)
 #LEARNING_RATES=("8e-3" "5e-3" "1e-3" "1e-2" "3e-2")
 #BATCH_SIZES=(128 256)
 
-script_dir="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/TEST_BED/caduceus/slurm_scripts"
+script_dir="/path/to/DNATokenization//slurm_scripts"
 echo "Starting hyperparameter sweep at $(date)" echo 
 echo "Testing Learning Rates: ${LEARNING_RATES[*]}"
 echo "Testing Batch Sizes: ${BATCH_SIZES[*]}"

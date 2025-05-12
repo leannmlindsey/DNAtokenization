@@ -11,8 +11,10 @@
 #SBATCH --output=../watch_folder/%x_%j.log  # Log file
 
 # Setup environment
-cd ../ || exit  # Go to the root directory of the repo
-source setup_env.sh
+module load cuda
+nvidia-smi
+source activate CADUCEUS_3
+cd /path/to/DNAtokenization/
 
 NUM_DEVICES=8
 
