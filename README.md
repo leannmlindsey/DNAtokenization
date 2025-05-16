@@ -1,5 +1,7 @@
 **NOTE: This is a repository forked from the original Caduceus which is located at https://github.com/kuleshov-group/caduceus created for the purpose of providing instructions on reproducing the experiments in ["The Impact of Tokenizer Selection on Genomic Language Models," Lindsey, et al. (2025)](https://doi.org/10.1101/2024.09.09.612081)**
 
+You are on the PHAGE branch. This uses character tokenization and provides the ability to run the Lambda Benchmark.
+
 ### Modifications to the Original Code
 I have made the following modifications to the original code:
 * Modified slurm scripts to work on University of Utah notchpeak system with 8 Nvidia A6000 GPUs
@@ -7,16 +9,12 @@ I have made the following modifications to the original code:
 * Added code to run the NTv2 benchmark
 * Corrected an error that appears in the MCC calculations in unbalanced test sets (see my reported issue here: kuleshov-group#38)
 * Addition of scripts to run attention based models for comparison using a cloned DNABERT2 repository
-### Abstract
-Motivation: Genomic language models have recently emerged as a new method to decode, interpret, and generate genetic sequences. Existing genomic language models have utilized various tokenization methods, including character tokenization, overlapping and non-overlapping k-mer tokenization, and byte-pair encoding, a method widely used in natural language models. Genomic sequences differ from natural language because of their low character variability, complex and overlapping features, and inconsistent directionality. These features make sub-word tokenization in genomic language models significantly different from both traditional language models and protein language models.
 
-Results: This study explores the impact of tokenization in genomic language models by evaluating their downstream performance on various fine-tuning tasks. We also perform a direct comparison of byte pair encoding and character tokenization in Mamba, a state-space model. Our results indicate that character tokenization outperforms sub-word tokenization methods on tasks that rely on nucleotide level resolution, such as splice site prediction and promoter detection, while no statistically significant differences were observed between tokenization methods on the remaining downstream tasks.
-
-### Citation Information
+### Citations
 If you use this code or our results in your research, please cite:
 
 ```
-"A Comparison of Tokenization Impact in Attention Based and State Space Genomic Language Models," [Lindsey et al. (2025)]( https://doi.org/10.1101/2024.09.09.612081)
+"LAMBDA: A Prophage Detection Benchmark for Genomic Language Models," [Lindsey et al. (2025)]( https://doi.org/10.1101/2024.09.09.612081)
 
 "Caduceus: Bi-Directional Equivariant Long-Range DNA Sequence Modeling," [Schiff et al. (2024)](https://arxiv.org/abs/2403.03234).
 
