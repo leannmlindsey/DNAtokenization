@@ -1,0 +1,45 @@
+# @package _global_
+defaults:
+  - /model: genomics_benchmark_cnn
+  - /pipeline: nucleotide_transformer_v2
+  - override /scheduler: cosine_warmup_timm
+
+task:
+  loss:
+    _name_: cross_entropy
+
+trainer:
+  accelerator: gpu
+  devices: 1
+  num_nodes: 1
+  accumulate_grad_batches: ${div_up:${train.global_batch_size}, ${eval:${trainer.devices} * ${dataset.batch_size} * ${trainer.num_nodes}}}
+  max_epochs: 100
+  precision: 16  # bf16 only a100
+  gradient_clip_val: 1.0
+
+encoder: id
+decoder: id
+
+dataset:
+  tokenizer_name: char
+  rc_aug: false  # reverse complement augmentation
+
+scheduler:
+  t_in_epochs: False
+  t_initial: ${eval:${div_up:${dataset.train_len}, ${train.global_batch_size}} * ${trainer.max_epochs}}
+  warmup_lr_init: 1e-6
+  warmup_t: ${eval:${div_up:${dataset.train_len}, ${train.global_batch_size}} * ${trainer.max_epochs} * 0.01}
+  lr_min: ${eval:0.1 * ${optimizer.lr}}
+
+
+optimizer:
+  lr: 6e-4
+  weight_decay: 0.1
+
+train:
+  gpu_mem: ${eval:"round(float(__import__('subprocess').check_output('nvidia-smi -i 0 --query-gpu=memory.total --format=csv,noheader,nounits', shell=True).strip().decode()) / 1000)"}
+  seed: 2222
+  global_batch_size: ${dataset.batch_size}
+  cross_validation: true
+  remove_test_loader_in_eval: true
+  pretrained_model_strict_load: false  # false allows encoder/decoder to be used if new model uses it

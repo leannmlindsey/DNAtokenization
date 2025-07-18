@@ -1,17 +1,22 @@
 #!/bin/bash
 #SBATCH --get-user-env                   # Retrieve the users login environment
-#SBATCH -t 96:00:00                      # Time limit (hh:mm:ss)
-#SBATCH --mem=64000M                     # RAM
-#SBATCH --gres=gpu:1                     # Number of GPUs
+#SBATCH --account=soc-gpu-np
+#SBATCH --partition=soc-gpu-np
+#SBATCH -t 12:00:00			 # Time limit (hh:mm:ss)
+#SBATCH --gres=gpu:a6000:1                # Number of GPUs
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=2
 #SBATCH -N 1                             # Number of nodes
 #SBATCH --requeue                        # Requeue job if it fails
 #SBATCH --open-mode=append               # Do not overwrite logs
+#SBATCH --output=../watch_folder/genomicbenchmark_%j.log  # Log file
 
 # Setup environment
-cd ../ || exit  # Go to the root directory of the repo
-source setup_env.sh
+module load cuda
+nvidia-smi
+source activate CADUCEUS_3
+cd /uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/CLEAN_REPEATED/caduceus
+
 
 # Expected args:
 # - CONFIG_PATH
@@ -29,8 +34,8 @@ source setup_env.sh
 
 # Run script
 # shellcheck disable=SC2154
-WANDB_NAME="${DISPLAY_NAME}_lr-${LR}_batch_size-${BATCH_SIZE}_rc_aug-${RC_AUG}"
-for seed in $(seq 1 5); do
+WANDB_NAME="${DISPLAY_NAME}_${TASK}_lr-${LR}_bs-${BATCH_SIZE}_rc_aug-${RC_AUG}"
+for seed in $(seq 1 10); do
   # shellcheck disable=SC2154
   HYDRA_RUN_DIR="./outputs/downstream/gb_cv5/${TASK}/${WANDB_NAME}/seed-${seed}"
   mkdir -p "${HYDRA_RUN_DIR}"

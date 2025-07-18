@@ -2,7 +2,7 @@
 #SBATCH --get-user-env                   # Retrieve the users login environment
 #SBATCH --account=soc-gpu-np
 #SBATCH --partition=soc-gpu-np
-#SBATCH -t 12:00:00                       # Time limit (hh:mm:ss)
+#SBATCH -t 12:00:00			 # Time limit (hh:mm:ss)
 #SBATCH --gres=gpu:a6000:1                # Number of GPUs
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=2
@@ -21,21 +21,22 @@ cd /uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPE
 # Expected args:
 # - TASK
 # - RC_AUG
-  
+
 
 # LR: 1e-3 -- in https://github.com/ML-Bioinfo-CEITEC/genomic_benchmarks, Adam optimizer is used with default lr=1e-3
 LR="1e-3"
 # Batch size: 64 -- See https://arxiv.org/abs/2306.15794 and https://github.com/ML-Bioinfo-CEITEC/genomic_benchmarks
 BATCH_SIZE=64
+
 # Run script
 WANDB_NAME="CNN-LR-${LR}_BATCH_SIZE-${BATCH_SIZE}_RC_AUG-${RC_AUG}"
-for seed in $(seq 6 10); do
-  HYDRA_RUN_DIR="./outputs/downstream/gb_cv5/${TASK}/${WANDB_NAME}/seed-${seed}"
+for seed in $(seq 4 10); do
+  HYDRA_RUN_DIR="./outputs/downstream/ntv2_cv10_ep20/${TASK}/${WANDB_NAME}/seed-${seed}"
   mkdir -p "${HYDRA_RUN_DIR}"
   echo "*****************************************************"
-  echo "Running GenomicsBenchmark TASK: ${TASK}, lr: ${LR}, batch_size: ${BATCH_SIZE}, RC_AUG: ${RC_AUG}, SEED: ${seed}"
+  echo "Running Nucleotide Transformer Tasks Revised TASK: ${TASK}, lr: ${LR}, batch_size: ${BATCH_SIZE}, RC_AUG: ${RC_AUG}, SEED: ${seed}"
   python -m train \
-    experiment=hg38/genomic_benchmark_cnn \
+    experiment=hg38/ntv2_cnn \
     callbacks.model_checkpoint_every_n_steps.every_n_train_steps=5000 \
     dataset.dataset_name="${TASK}" \
     dataset.train_val_split_seed=${seed} \
@@ -43,10 +44,10 @@ for seed in $(seq 6 10); do
     dataset.rc_aug="${RC_AUG}" \
     optimizer.lr="${LR}" \
     trainer.max_epochs=10 \
-    wandb.group="downstream/gb_cv5" \
+    wandb.group="downstream/ntv2_cv10_ep20" \
     wandb.job_type="${TASK}" \
     wandb.name="${WANDB_NAME}" \
-    wandb.id="gb_cv5_${TASK}_${WANDB_NAME}_seed-${seed}" \
+    wandb.id="ntv2_cv10_ep20_${TASK}_${WANDB_NAME}_seed-${seed}" \
     +wandb.tags=\["seed-${seed}"\] \
     hydra.run.dir="${HYDRA_RUN_DIR}"
   echo "*****************************************************"

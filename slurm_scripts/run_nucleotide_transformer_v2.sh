@@ -2,14 +2,14 @@
 #SBATCH --get-user-env                   # Retrieve the users login environment
 #SBATCH --account=soc-gpu-np
 #SBATCH --partition=soc-gpu-np
-#SBATCH -t 12:00:00                       # Time limit (hh:mm:ss)
+#SBATCH -t 12:00:00			 # Time limit (hh:mm:ss)
 #SBATCH --gres=gpu:a6000:1                # Number of GPUs
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=2
 #SBATCH -N 1                             # Number of nodes
 #SBATCH --requeue                        # Requeue job if it fails
 #SBATCH --open-mode=append               # Do not overwrite logs
-#SBATCH --output=../watch_folder/ntv2cnn_%j.log  # Log file
+#SBATCH --output=../watch_folder/nt_cv10/nt_%j.log  # Log file
 
 # Setup environment
 module load cuda
@@ -17,36 +17,49 @@ nvidia-smi
 source activate CADUCEUS_3
 cd /uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/CLEAN_REPEATED/caduceus
 
+export HYDRA_FULL_ERROR=1
 
 # Expected args:
+# - CONFIG_PATH
+# - PRETRAINED_PATH
+# - DISPLAY_NAME
+# - MODEL
+# - MODEL_NAME
+# - CONJOIN_TRAIN_DECODER
+# - CONJOIN_TEST
 # - TASK
+# - LR
+# - BATCH_SIZE
 # - RC_AUG
-  
 
-# LR: 1e-3 -- in https://github.com/ML-Bioinfo-CEITEC/genomic_benchmarks, Adam optimizer is used with default lr=1e-3
-LR="1e-3"
-# Batch size: 64 -- See https://arxiv.org/abs/2306.15794 and https://github.com/ML-Bioinfo-CEITEC/genomic_benchmarks
-BATCH_SIZE=64
 # Run script
-WANDB_NAME="CNN-LR-${LR}_BATCH_SIZE-${BATCH_SIZE}_RC_AUG-${RC_AUG}"
-for seed in $(seq 6 10); do
-  HYDRA_RUN_DIR="./outputs/downstream/gb_cv5/${TASK}/${WANDB_NAME}/seed-${seed}"
+WANDB_NAME="${DISPLAY_NAME}_LR-${LR}_BATCH_SIZE-${BATCH_SIZE}_RC_AUG-${RC_AUG}"
+for seed in $(seq 1 10); do
+  HYDRA_RUN_DIR="./outputs/downstream/ntv2_cv10_ep20/${TASK}/${DISPLAY_NAME}_LR-${LR}_BATCH_SIZE-${BATCH_SIZE}_RC_AUG-${RC_AUG}/seed-${seed}"
   mkdir -p "${HYDRA_RUN_DIR}"
   echo "*****************************************************"
-  echo "Running GenomicsBenchmark TASK: ${TASK}, lr: ${LR}, batch_size: ${BATCH_SIZE}, RC_AUG: ${RC_AUG}, SEED: ${seed}"
+  echo "Running NT model: ${DISPLAY_NAME}, TASK: ${TASK}, LR: ${LR}, BATCH_SIZE: ${BATCH_SIZE}, RC_AUG: ${RC_AUG}, SEED: ${seed}"
   python -m train \
-    experiment=hg38/genomic_benchmark_cnn \
+    experiment=hg38/nucleotide_transformer_v2 \
     callbacks.model_checkpoint_every_n_steps.every_n_train_steps=5000 \
     dataset.dataset_name="${TASK}" \
     dataset.train_val_split_seed=${seed} \
     dataset.batch_size=${BATCH_SIZE} \
     dataset.rc_aug="${RC_AUG}" \
+    +dataset.conjoin_test="${CONJOIN_TEST}" \
+    model="${MODEL}" \
+    model._name_="${MODEL_NAME}" \
+    +model.config_path="${CONFIG_PATH}" \
+    +model.conjoin_test="${CONJOIN_TEST}" \
+    +decoder.conjoin_train="${CONJOIN_TRAIN_DECODER}" \
+    +decoder.conjoin_test="${CONJOIN_TEST}" \
     optimizer.lr="${LR}" \
-    trainer.max_epochs=10 \
-    wandb.group="downstream/gb_cv5" \
+    train.pretrained_model_path="${PRETRAINED_PATH}" \
+    trainer.max_epochs=20 \
+    wandb.group="downstream/nt2_cv10_ep20" \
     wandb.job_type="${TASK}" \
     wandb.name="${WANDB_NAME}" \
-    wandb.id="gb_cv5_${TASK}_${WANDB_NAME}_seed-${seed}" \
+    wandb.id="ntv2_cv10_ep-20_${TASK}_${WANDB_NAME}_seed-${seed}" \
     +wandb.tags=\["seed-${seed}"\] \
     hydra.run.dir="${HYDRA_RUN_DIR}"
   echo "*****************************************************"

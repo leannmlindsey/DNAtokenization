@@ -38,6 +38,18 @@
 #RC_AUGS=( "false" )
 #LRS=( "1e-3" "2e-3" )
 
+## Mamba char best model from hp tuning
+LOG_DIR="../watch_folder/nt_cv10/mamba_03242025"
+CONFIG_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/CLEAN_REPEATED/caduceus/outputs/pretrain/hg38/pre_mamba_ntp_rc_aug_char_4k_d-256_n-4_lr-1e-2_bs-256/model_config.json"
+PRETRAINED_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/CLEAN_REPEATED/caduceus/outputs/pretrain/hg38/pre_mamba_ntp_rc_aug_char_4k_d-256_n-4_lr-1e-2_bs-256/checkpoints/last.ckpt"
+DISPLAY_NAME="mamba_char_4k_d245_4L_new1"
+MODEL="mamba"
+MODEL_NAME="dna_embedding_mamba"
+CONJOIN_TRAIN_DECODER="false"
+CONJOIN_TEST="false"
+RC_AUGS=( "true" )
+LRS=("1e-3" "2e-3" "1e-2")
+
 mkdir -p "${LOG_DIR}"
 export_str="ALL,CONFIG_PATH=${CONFIG_PATH},PRETRAINED_PATH=${PRETRAINED_PATH},DISPLAY_NAME=${DISPLAY_NAME},MODEL=${MODEL},MODEL_NAME=${MODEL_NAME},CONJOIN_TRAIN_DECODER=${CONJOIN_TRAIN_DECODER},CONJOIN_TEST=${CONJOIN_TEST}"
 for TASK in "enhancers" "enhancers_types" "H3" "H3K4me1" "H3K4me2" "H3K4me3" "H3K9ac" "H3K14ac" "H3K36me3" "H3K79me3" "H4" "H4ac" "promoter_all" "promoter_no_tata" "promoter_tata" "splice_sites_all" "splice_sites_acceptors" "splice_sites_donors"; do

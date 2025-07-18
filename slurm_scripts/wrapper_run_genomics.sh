@@ -7,15 +7,23 @@
 #LOG_DIR="../watch_folder/gb_cv5/hyena"
 #CONFIG_PATH=$(realpath "../outputs/hyena_hf/hyenadna-tiny-1k-seqlen/config.json")
 #PRETRAINED_PATH=$(realpath "../outputs/hyena_hf/hyenadna-tiny-1k-seqlen/weights.ckpt")
+#CONFIG_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/CLEAN/caduceus/outputs/pretrain/hg38/hyena_rc_aug_seqlen-4k_dmodel-256_nlayer-4_lr-6e-4/model_config.json"
+#PRETRAINED_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/CLEAN/caduceus/outputs/pretrain/hg38/hyena_rc_aug_seqlen-4k_dmodel-256_nlayer-4_lr-6e-4/checkpoints/last.ckpt"
 #DISPLAY_NAME="hyena"
 #MODEL="hyena"
 #MODEL_NAME="dna_embedding"
 #CONJOIN_TRAIN_DECODER="false"
 #CONJOIN_TEST="false"
-#RC_AUGS=( "false" "true" )
-#LRS=( "6e-4" )
+#RC_AUGS=( "true" )
+#LRS=( "6e-3" "6e-4" "6e-5" )
 
 ## Mamba NTP
+#LOG_DIR="../watch_folder/gb_cv10/mamba_03242025"
+
+## 
+#CONFIG_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/CLEAN_REPEATED/caduceus/outputs/pretrain/hg38/pre_mamba_ntp_rc_aug_char_4k_d-256_n-4_lr-1e-2_bs-256/model_config.json"
+#PRETRAINED_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/CLEAN_REPEATED/caduceus/outputs/pretrain/hg38/pre_mamba_ntp_rc_aug_char_4k_d-256_n-4_lr-1e-2_bs-256/checkpoints/last.ckpt"
+#DISPLAY_NAME="mamba_uni_char"
 #LOG_DIR="../watch_folder/gb_cv5/mamba"
 #CONFIG_PATH=$(realpath "../outputs/pretrain/hg38/mamba_ntp_rc_aug_seqlen-1k_d_model-128_n_layer-4_lr-8e-3/model_config.json")
 #PRETRAINED_PATH=$(realpath "../outputs/pretrain/hg38/mamba_ntp_rc_aug_seqlen-1k_d_model-128_n_layer-4_lr-8e-3/checkpoints/last.ckpt")
@@ -25,7 +33,7 @@
 #CONJOIN_TRAIN_DECODER="false"
 #CONJOIN_TEST="false"
 #RC_AUGS=( "true" )
-#LRS=( "1e-3" "2e-3" )
+#LRS=( "1e-3" "2e-3" "1e-2")
 
 ## Caduceus NO POST HOC
 #LOG_DIR="../watch_folder/gb_cv5/caduceus"
@@ -63,9 +71,24 @@
 #RC_AUGS=( "false" )
 #LRS=( "1e-3" "2e-3" )
 
+## Caduceus Parameter Sharing
+LOG_DIR="../watch_folder/gb_cv10/caduceus"
+#CONFIG_PATH=$(realpath "../outputs/pretrain/hg38/caduceus-ps_seqlen-1k_d_model-256_n_layer-4_lr-8e-3/model_config.json")
+#PRETRAINED_PATH=$(realpath "../outputs/pretrain/hg38/caduceus-ps_seqlen-1k_d_model-256_n_layer-4_lr-8e-3/checkpoints/last.ckpt")
+CONFIG_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/CLEAN_REPEATED/caduceus/outputs/pretrain/hg38/caduceus-ps_seqlen-4k_d_model-256_n_layer-4_lr-8e-3/model_config.json"
+PRETRAINED_PATH="/uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/CLEAN_REPEATED/caduceus/outputs/pretrain/hg38/caduceus-ps_seqlen-4k_d_model-256_n_layer-4_lr-8e-3/checkpoints/last.ckpt"
+DISPLAY_NAME="caduceus_ps"
+MODEL="caduceus"
+MODEL_NAME="dna_embedding_caduceus"
+CONJOIN_TRAIN_DECODER="true"  # Use this in decoder to always combine forward and reverse complement channels
+CONJOIN_TEST="false"
+RC_AUGS=( "false" )
+#LRS=("1e-4" "5e-4" "1e-5")
+
 mkdir -p "${LOG_DIR}"
 export_str="ALL,CONFIG_PATH=${CONFIG_PATH},PRETRAINED_PATH=${PRETRAINED_PATH},DISPLAY_NAME=${DISPLAY_NAME},MODEL=${MODEL},MODEL_NAME=${MODEL_NAME},CONJOIN_TRAIN_DECODER=${CONJOIN_TRAIN_DECODER},CONJOIN_TEST=${CONJOIN_TEST}"
-for TASK in "dummy_mouse_enhancers_ensembl" "demo_coding_vs_intergenomic_seqs" "demo_human_or_worm" "human_enhancers_cohn" "human_enhancers_ensembl" "human_ensembl_regulatory" "human_nontata_promoters" "human_ocr_ensembl"; do
+for TASK in "dummy_mouse_enhancers_ensembl" "drosophilia_enhancers" "demo_coding_vs_intergenomic_seqs" "demo_human_or_worm" "human_enhancers_cohn" "human_enhancers_ensembl" "human_ensembl_regulatory" "human_nontata_promoters" "human_ocr_ensembl"; do
+#for TASK in "drosophilia_enhancers"; do
   for LR in "${LRS[@]}"; do
     for BATCH_SIZE in 128 256; do
       for RC_AUG in "${RC_AUGS[@]}"; do

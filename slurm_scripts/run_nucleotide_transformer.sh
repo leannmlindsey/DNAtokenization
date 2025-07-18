@@ -1,17 +1,22 @@
 #!/bin/bash
 #SBATCH --get-user-env                   # Retrieve the users login environment
-#SBATCH -t 96:00:00                      # Time limit (hh:mm:ss)
-#SBATCH --mem=64G                        # RAM
-#SBATCH --gres=gpu:2                     # Number of GPUs
-#SBATCH --ntasks-per-node=2
-#SBATCH --cpus-per-task=4
+#SBATCH --account=soc-gpu-np
+#SBATCH --partition=soc-gpu-np
+#SBATCH -t 4:00:00                       # Time limit (hh:mm:ss)
+#SBATCH --gres=gpu:a6000:1                # Number of GPUs
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=2
 #SBATCH -N 1                             # Number of nodes
 #SBATCH --requeue                        # Requeue job if it fails
 #SBATCH --open-mode=append               # Do not overwrite logs
+#SBATCH --output=../watch_folder/nt_cv10/nt_%j.log  # Log file
 
 # Setup environment
-cd ../ || exit  # Go to the root directory of the repo
-source setup_env.sh
+module load cuda
+nvidia-smi
+source activate CADUCEUS_3
+cd /uufs/chpc.utah.edu/common/home/u1323098/sundar-group-space2/PHAGE_FINAL_PAPER/MODELS/CLEAN_REPEATED/caduceus
+
 export HYDRA_FULL_ERROR=1
 
 # Expected args:
@@ -29,7 +34,7 @@ export HYDRA_FULL_ERROR=1
 
 # Run script
 WANDB_NAME="${DISPLAY_NAME}_LR-${LR}_BATCH_SIZE-${BATCH_SIZE}_RC_AUG-${RC_AUG}"
-for seed in $(seq 1 10); do
+for seed in $(seq 1 3); do
   HYDRA_RUN_DIR="./outputs/downstream/nt_cv10_ep20/${TASK}/${DISPLAY_NAME}_LR-${LR}_BATCH_SIZE-${BATCH_SIZE}_RC_AUG-${RC_AUG}/seed-${seed}"
   mkdir -p "${HYDRA_RUN_DIR}"
   echo "*****************************************************"
