@@ -30,7 +30,7 @@ BATCH_SIZE=64
 
 # Run script
 WANDB_NAME="CNN-LR-${LR}_BATCH_SIZE-${BATCH_SIZE}_RC_AUG-${RC_AUG}"
-for seed in $(seq 4 10); do
+for seed in $(seq 1 10); do
   HYDRA_RUN_DIR="./outputs/downstream/ntv2_cv10_ep20/${TASK}/${WANDB_NAME}/seed-${seed}"
   mkdir -p "${HYDRA_RUN_DIR}"
   echo "*****************************************************"
